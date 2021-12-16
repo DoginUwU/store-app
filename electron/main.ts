@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
+import { createDownload } from './download'
 
 let mainWindow: BrowserWindow | null
 
@@ -13,9 +14,11 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 function createWindow () {
   mainWindow = new BrowserWindow({
     // icon: path.join(assetsPath, 'assets', 'icon.png'),
+    title: 'Store App',
+    frame: false,
     width: 1100,
     height: 700,
-    backgroundColor: '#191622',
+    backgroundColor: '#fff',
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -34,8 +37,8 @@ async function registerListeners () {
   /**
    * This comes from bridge integration, check bridge.ts
    */
-  ipcMain.on('message', (_, message) => {
-    console.log(message)
+  ipcMain.on('download', (_, message) => {
+    createDownload(JSON.parse(message));
   })
 }
 
@@ -55,3 +58,5 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+export { mainWindow }

@@ -1,28 +1,24 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import Color from 'color';
 
-export const Container = styled.button`
-  height: 42px;
-  padding: 0 24px;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
+interface ContainerProps { 
+    disabled?: boolean;
+}
 
-  background: #8257e6;
-  border-radius: 8px;
-  border: 0;
-
-  color: #FFF;
-  font-size: 16px;
-  font-weight: bold;
-
-  cursor: pointer;
+const Container = styled.button<ContainerProps>`
+  width: 100%;
+  position: relative;
+  border-radius: 1em;
+  background: ${props =>
+    props.disabled ? Color('#0064fe').alpha(0.05).string() : '#0064fe'};
+  color: #fff;
+  border: none;
+  outline: none;
+  padding: 0.6em 1em;
 
   &:hover {
-    filter: brightness(0.9);
-  }
-
-  &:active {
-    filter: brightness(0.7);
+    background: ${Color('#0064fe').lighten(0.2).string()};
   }
 `
+
+export { Container };
